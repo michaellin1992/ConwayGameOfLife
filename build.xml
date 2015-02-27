@@ -10,18 +10,18 @@
     <mkdir dir="build/classes"/>
     <javac srcdir="src" destdir="build/classes"/>
   </target>
-
+  
   <target name="jar">
     <mkdir dir="build/jar"/>
     <jar destfile="build/jar/ConwayGameOfLife.jar" basedir="build/classes">
       <manifest>
         <attribute name="Main-Class" value="GameOfLife.ConwayGameOfLife"/>
       </manifest>
-        </jar>
-    </target>
+    </jar>
+  </target>
 
-    <target name="run" depends="compile, jar"> 
-        <java jar="build/jar/ConwayGameOfLife.jar" fork="true"/>
-    </target>
-
+  <target name="run" depends="compile, jar"> 
+    <java jar="build/jar/ConwayGameOfLife.jar" fork="true"/>
+  </target>
+  
 </project>
