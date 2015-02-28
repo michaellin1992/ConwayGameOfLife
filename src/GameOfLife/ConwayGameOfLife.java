@@ -21,7 +21,7 @@ public class ConwayGameOfLife {
     public void evolveBoard() {
     }
 
-    public boolean evolveSquare(int column, int row) {
+    private boolean evolveSquare(int column, int row) {
         int aliveNeighbors = computeAliveNeighbors(column, row);
         if (squareIsAlive(column, row)) {
             if (aliveNeighbors < 2) {
@@ -38,6 +38,58 @@ public class ConwayGameOfLife {
                 return false;
             }
         }
+    }
+
+    private boolean squareIsAlive(int column, int row) {
+        if (mBoard[column][row] == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    /** 
+     * Computes the number of neighbors that are alive.
+     */
+    private int computeAliveNeighbors(int column, int row) {
+        int aliveNeighbors = 0;
+        if ((column+1 < mBoardDimension) &&
+            (squareIsAlive(column+1,row) != null)) {
+            aliveNeighbors++;
+        } 
+        if ((column + 1 < mBoardDimension) &&
+            (row + 1 < mBoardDimension) &&
+            (squareIsAlive(column+1,row+1) != null)) {
+            aliveNeighbors++;
+        }
+        if ((column + 1 < mBoardDimension) &&
+            (row - 1 >= 0) &&
+            (squareIsAlive(column+1,row-1) != null)) {
+            aliveNeighbors++;
+        }
+        if ((row - 1 >= 0) &&
+            (mBoard[column][row - 1] != null)) {
+            aliveNeighbors++;
+        }
+        if ((row + 1 < mBoardDimension) &&
+            (mBoard[column][row - 1] != null)) {
+            aliveNeighbors++;
+        }
+        if ((column - 1 >= 0) &&
+            (mBoard[column - 1][row] != null)) {
+            aliveNeighbors++;
+        }
+        if ((column - 1 >= 0) &&
+            (row - 1 >= 0) &&
+            (mBoard[column - 1][row - 1] != null)) {
+            aliveNeighbors++;
+        }
+        if ((column - 1 >= 0) &&
+            (row + 1 >= 0) &&
+            (mBoard[column - 1][row + 1] != null)) {
+            aliveNeighbors++;
+        }
+        return aliveNeighbors;
     }
 
     public void printBoard() {
