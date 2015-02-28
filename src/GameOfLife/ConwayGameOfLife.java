@@ -18,6 +18,28 @@ public class ConwayGameOfLife {
         printBoard();
     }
 
+    public void evolveBoard() {
+    }
+
+    public boolean evolveSquare(int column, int row) {
+        int aliveNeighbors = computeAliveNeighbors(column, row);
+        if (squareIsAlive(column, row)) {
+            if (aliveNeighbors < 2) {
+                return false;
+            } else if (aliveNeighbors == 2 || aliveNeighbors == 3) {
+                return true;
+            } else if (aliveNeighbors > 3) {
+                return false;
+            }
+        } else {
+            if (aliveNeighbors == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public void printBoard() {
         for (int row = 0; row < mBoardDimension; row++) {
             for (int column = 0; column < mBoardDimension; column++) {
