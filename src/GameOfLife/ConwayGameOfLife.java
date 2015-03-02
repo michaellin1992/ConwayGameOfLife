@@ -16,12 +16,26 @@ public class ConwayGameOfLife {
         mBoard[1][1] = "X";
         mBoard[2][1] = "X";
         printBoard();
+        evolveBoard(3);
     }
 
-    public void evolveBoard() {
+    public void evolveBoard(int iterations) {
+        while (iterations != 0) {
+            String[][] newBoard = new String[mBoardDimension][mBoardDimension];
+            for (int column = 0; column < mBoardDimension; column++) {
+                for (int row = 0; row < mBoardDimension; row++) {
+                    if (shouldEvolveSquare(column, row)) {
+                        newBoard[column][row] = "X";
+                    }
+                }
+            }
+            iterations--;
+            mBoard = newBoard;
+            printBoard();
+        }
     }
 
-    private boolean evolveSquare(int column, int row) {
+    private boolean shouldEvolveSquare(int column, int row) {
         int aliveNeighbors = computeAliveNeighbors(column, row);
         if (squareIsAlive(column, row)) {
             if (aliveNeighbors < 2) {
@@ -34,10 +48,9 @@ public class ConwayGameOfLife {
         } else {
             if (aliveNeighbors == 3) {
                 return true;
-            } else {
-                return false;
             }
         }
+        return false;
     }
 
     private boolean squareIsAlive(int column, int row) {
@@ -54,39 +67,39 @@ public class ConwayGameOfLife {
     private int computeAliveNeighbors(int column, int row) {
         int aliveNeighbors = 0;
         if ((column+1 < mBoardDimension) &&
-            (squareIsAlive(column+1,row) != null)) {
+            (squareIsAlive(column+1,row) )) {
             aliveNeighbors++;
         } 
         if ((column + 1 < mBoardDimension) &&
             (row + 1 < mBoardDimension) &&
-            (squareIsAlive(column+1,row+1) != null)) {
+            (squareIsAlive(column+1,row+1) )) {
             aliveNeighbors++;
         }
         if ((column + 1 < mBoardDimension) &&
             (row - 1 >= 0) &&
-            (squareIsAlive(column+1,row-1) != null)) {
+            (squareIsAlive(column+1,row-1) )) {
             aliveNeighbors++;
         }
         if ((row - 1 >= 0) &&
-            (mBoard[column][row - 1] != null)) {
+            (squareIsAlive(column, row-1))) {
             aliveNeighbors++;
         }
         if ((row + 1 < mBoardDimension) &&
-            (mBoard[column][row - 1] != null)) {
+            (squareIsAlive(column, row+1))) {
             aliveNeighbors++;
         }
         if ((column - 1 >= 0) &&
-            (mBoard[column - 1][row] != null)) {
+            (squareIsAlive(column - 1, row))) {
             aliveNeighbors++;
         }
         if ((column - 1 >= 0) &&
             (row - 1 >= 0) &&
-            (mBoard[column - 1][row - 1] != null)) {
+            (squareIsAlive(column - 1, row - 1))) {
             aliveNeighbors++;
         }
         if ((column - 1 >= 0) &&
-            (row + 1 >= 0) &&
-            (mBoard[column - 1][row + 1] != null)) {
+            (row + 1 < mBoardDimension) &&
+            (squareIsAlive(column - 1, row + 1))) {
             aliveNeighbors++;
         }
         return aliveNeighbors;
@@ -111,6 +124,7 @@ public class ConwayGameOfLife {
         for (int column = 0; column < mBoardDimension; column++) {
             System.out.print("_ ");
         }
+        System.out.println("");
     }
 
     public int add(int x, int y) {
