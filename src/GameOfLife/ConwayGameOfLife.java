@@ -1,22 +1,33 @@
 package GameOfLife;
 
+import java.util.ArrayList;
+
 public class ConwayGameOfLife {
     private int mBoardDimension;
     private String[][] mBoard;
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
-        ConwayGameOfLife game = new ConwayGameOfLife();
+        int boardDimension = Integer.parseInt(args[0]);
+        int iterations = Integer.parseInt(args[1]);
+        String startingBlocks = args[2];
+        String[] splitCoordinates = startingBlocks.split(":");
+        ArrayList<Integer[]> startPosition = new ArrayList<Integer[]>();
+        for (String onePoint : splitCoordinates) {
+            String[] coordinate = onePoint.split(",");
+            Integer[] xyCoordinates = new Integer[2];
+            xyCoordinates[0] = Integer.parseInt(coordinate[0]);
+            xyCoordinates[1] = Integer.parseInt(coordinate[1]);
+            startPosition.add(xyCoordinates);
+        }
+        ConwayGameOfLife game = new ConwayGameOfLife(boardDimension, iterations, startPosition);
     }
 
-    public ConwayGameOfLife() {
-        mBoardDimension = 3;
+    public ConwayGameOfLife(int boardDimension, int iterations, ArrayList<Integer[]> startPosition) {
+        mBoardDimension = boardDimension;
         mBoard = new String[mBoardDimension][mBoardDimension];
-        mBoard[0][1] = "X";
-        mBoard[1][1] = "X";
-        mBoard[2][1] = "X";
+        populateBoard(startPosition);
         printBoard();
-        evolveBoard(3);
+        evolveBoard(iterations);
     }
 
     public void evolveBoard(int iterations) {
@@ -32,6 +43,16 @@ public class ConwayGameOfLife {
             iterations--;
             mBoard = newBoard;
             printBoard();
+        }
+    }
+
+    private void mark(int column, int row) {
+        mBoard[column][row] = "X";
+    }
+    
+    private void populateBoard(ArrayList<Integer[]> startPosition) {
+        for (Integer[] startingBlock : startPosition) {
+            mark(startingBlock[0], startingBlock[1]);
         }
     }
 
@@ -124,6 +145,7 @@ public class ConwayGameOfLife {
         for (int column = 0; column < mBoardDimension; column++) {
             System.out.print("_ ");
         }
+        System.out.println("");
         System.out.println("");
     }
 

@@ -76,7 +76,11 @@
            </target>
 
         <target name="run" depends="compile,jar">
-          <java jar="build/jar/ConwayGameOfLife.jar" fork="true"/>
+          <java jar="build/jar/ConwayGameOfLife.jar" fork="true">
+            <arg value="${dimension}"/>
+            <arg value="${iterations}"/>
+            <arg value="${startingPos}"/>
+          </java>
         </target>
 
 </project>

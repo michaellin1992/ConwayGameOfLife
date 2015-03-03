@@ -1,5 +1,6 @@
 import GameOfLife.ConwayGameOfLife;
 
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +12,10 @@ public class ConwayGameOfLifeTests {
 
     @Before
     public void setUp() {
-        mGame = new ConwayGameOfLife();
+        ArrayList<Integer[]> startPosition = new ArrayList<Integer[]>();
+        Integer[] startPos = {1, 2};
+        startPosition.add(startPos);
+        mGame = new ConwayGameOfLife(1, 1, startPosition);
     }
     
     @Test
